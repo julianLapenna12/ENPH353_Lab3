@@ -23,6 +23,7 @@ class image_converter:
 
     self.bridge = CvBridge()
     self.image_sub = rospy.Subscriber("/rrbot/camera1/image_raw",Image,self.callback)
+    self.i = 0
     
 
   def PID(self,input,setpoint):
@@ -69,7 +70,10 @@ class image_converter:
     disp = cv2.circle(processed_im, (cx, cy), 2, (0,255,0), 2)
     cv2.drawContours(image=disp, contours=contours, contourIdx=0, color=(0, 255, 0), thickness=2, lineType=cv2.LINE_AA)
     # see the results
-    cv2.imshow('None approximation', disp)
+    #self.i+=1
+    #w_title = ("none {}".format(self.i))
+    cv2.imshow('a', disp)
+    cv2.waitKey(3)
 
     feedback = self.PID(cx, int(processed_im.shape[1]/2)) #change to be modular `int(th.shape[1]/2)`
 

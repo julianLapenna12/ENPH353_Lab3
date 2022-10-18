@@ -60,6 +60,7 @@ class image_converter:
     b = 4
     c = 2
     d = 1
+    e = 0
 
     #getting the average of the road pixels
     road_pixels1 = []
@@ -82,7 +83,24 @@ class image_converter:
     road_center3 = sum(road_pixels3)/(len(road_pixels3) + 1)
     road_center4 = sum(road_pixels4)/(len(road_pixels4) + 1)
 
-    road_center_avg = (road_center1*a + road_center2*b + road_center3*c + road_center4*d)/(a+b+c+d)
+    if (road_center4 == 0):
+      d = 0
+
+    if (road_center3 == 0):
+      c = 0   
+
+    if (road_center2 == 0):
+      b = 0
+    
+    if (road_center1 == 0):
+      a = 0
+
+    if (a == 0 and b ==0 and c == 0 and d ==0):
+      e = 1
+
+    
+
+    road_center_avg = (road_center1*a + road_center2*b + road_center3*c + road_center4*d)/(a+b+c+d+e)
 
     return [road_center_avg, road_center1, road_center2, road_center3, road_center4]
 
@@ -110,7 +128,7 @@ class image_converter:
     disp3 = cv2.circle(disp2, (math.floor(road_centers[3]), h - 80), 2, (255,0,0), 2)
     disp4 = cv2.circle(disp3, (math.floor(road_centers[4]), h - 120), 2, (255,0,0), 2)
 
-    ##### Code that displays contours, not currently working in my alternate file
+    # ##### Code that displays contours, not currently working in my alternate file
     # # draw contours on the original image
     # gray = cv2.cvtColor(cv_image, cv2.COLOR_RGB2GRAY)
     # blur = cv2.GaussianBlur(gray,(3,3),0)
